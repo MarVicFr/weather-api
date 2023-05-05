@@ -1,13 +1,19 @@
+import Forecast from './components/Forecast'
 import Search from './components/Search'
 import useForecast from './components/hooks/useForcast'
 
 const App = (): JSX.Element => {
 
+  const onLoad = () => {
+    console.log(("Je charge"));
+    
+  }
+
   const {term, options, forecast, onInputChange, onOptionSelect, onSubmit} = useForecast()
   return (
-    <main className="flex justify-center items-center bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 h-[100vh] w-full">
+    <main className="flex justify-center items-center bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 h-[100vh] w-full" onLoad={onLoad}>
       {forecast ? (
-        'Forcast existant'
+        <Forecast data={forecast} />
       ) : (
         <Search
           term={term}

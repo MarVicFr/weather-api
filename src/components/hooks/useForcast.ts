@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { optionType } from '../../types'
+import { optionType, forecastType } from '../../types'
 
 const useForecast = () => {
     const [term, setTerm] = useState<string>('')
     const [city, setCity] = useState<optionType | null>(null)
     const [options, setOptions] = useState<[]>([])
-    const [forecast, setForecast] = useState<null>(null)
+    const [forecast, setForecast] = useState<forecastType | null>(null)
 
     const getSearchOptions = (value: string) => {
         fetch(
@@ -13,24 +13,37 @@ const useForecast = () => {
             }`
         )
             .then((res) => res.json())
-            .then((data) => setOptions(data))
-    }
-
-    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim()
-        setTerm(value)
-
-        if (value === '') return
-
-        getSearchOptions(value)
-    }
-
-    const getForecast = (city: optionType) => {
-        fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${process.env.REACT_APP_API_KEY}`
-        )
-            .then((res) => res.json())
-            .then((data) => setForecast(data))
+            .then((data) => {
+                setOptions(data)
+                console.log("la data 1: ", data);
+            })
+            .catch(e => console.log(e))
+        }
+        
+        const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value.trim()
+            setTerm(value)
+            
+            if (value === '') return
+            
+            getSearchOptions(value)
+        }
+        
+        const getForecast = (city: optionType) => {
+            fetch(
+                `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${process.env.REACT_APP_API_KEY}`
+                )
+                .then((res) => res.json())
+                .then((data) => {
+                    const forecastData = {
+                        ...data.city,
+                        list: data.list.slice(0, 16),
+                    }
+                    
+                    console.log("la data 2: ", data);
+                setForecast(forecastData)
+            })
+            .catch(e => console.log(e))
     }
 
     const onSubmit = () => {

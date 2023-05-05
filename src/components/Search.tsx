@@ -40,10 +40,12 @@ const Search = ({
             {options.map((option: optionType, index: number) => (
               <li key={option.name + '-' + index}>
                 <button
-                  className="text-left text-sm w-full hover:bg-zinc-700 hover:text-white px-2 py-1 cursor:pointer"
+                  className="flex items-center text-left text-sm w-full hover:bg-zinc-700 hover:text-white px-2 py-1 cursor:pointer"
                   onClick={() => onOptionSelect(option)}
                 >
-                  {option.name}
+                  <img src={`https://flagsapi.com/${option.country}/flat/16.png`}></img>
+                  {option.name},
+                  {option.state}
                 </button>
               </li>
             ))}
