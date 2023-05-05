@@ -39,3 +39,7 @@ export type forecastType = {
         visibility: number
     }]
 }
+
+export type frenchMapType = {
+    center : number
+}

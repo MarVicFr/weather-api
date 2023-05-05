@@ -1,4 +1,5 @@
 import Forecast from './components/Forecast'
+import FrenchMap from './components/FrenchMap'
 import Search from './components/Search'
 import useForecast from './components/hooks/useForcast'
 
@@ -11,7 +12,7 @@ const App = (): JSX.Element => {
 
   const {term, options, forecast, onInputChange, onOptionSelect, onSubmit} = useForecast()
   return (
-    <main className="flex justify-center items-center bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 h-[100vh] w-full" onLoad={onLoad}>
+    <main className="flex flex-col justify-center items-center bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 h-[100vh] w-full" onLoad={onLoad}>
       {forecast ? (
         <Forecast data={forecast} />
       ) : (
@@ -22,7 +23,8 @@ const App = (): JSX.Element => {
           onOptionSelect={onOptionSelect}
           onSubmit={onSubmit}
         />
-      )}
+        )}
+        <FrenchMap />
     </main>
   )
 }
